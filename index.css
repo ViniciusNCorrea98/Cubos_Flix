@@ -54,3 +54,60 @@
 .input::placeholder{
   color:#979797;
 }
+
+.movies-container, .movies{
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.movie{
+  background-image: url('https://image.tmdb.org/t/p/original/wcKFYIiVDvRURrzglV9kGu7fpfY.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  width: 168px;
+  height: 300px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.movie_info{
+  margin-top: auto;
+
+  background: rgba(0, 0, 0, 0.8);
+
+  padding: 10px 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  
+}
+
+.movie_title{
+  font-family: 'Manrope', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 150%;
+
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 100px;
+  text-overflow: ellipsis;
+  
+  color: #fff;
+}
+
+.movie_rating{
+  font-family: 'Manrope', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 150%;
+  color: #fcbd6e;
+}
