@@ -72,6 +72,8 @@
 
   display: flex;
   flex-direction: column;
+
+  box-shadow: 0px, 4px, 8px, rgba(0, 0, 0, 0.15);
 }
 
 .movie_info{
@@ -110,4 +112,93 @@
   font-size: 12px;
   line-height: 150%;
   color: #fcbd6e;
+}
+
+.movies-container{
+  margin-bottom: 40px;
+}
+
+.subtitle{
+  font-family: 'Manrope', sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  font-style: normal;
+  line-height: 150%;
+
+  margin-bottom: 24px;
+}
+
+.highlight{
+  display: flex;
+  gap: 24px;
+}
+
+.highlight__video{
+  background-image: linear-gradient( rgba(0, 0, 0, 0.6) 100%, rgba(0, 0, 0, 0.6) 100%), url('https://image.tmdb.org/t/p/original/jlGmlFOcfo8n5tURmhC7YVd4Iyy.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+ 
+
+  width: 550px;
+  height: 360px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.highlight__title-rating{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.highlight__info{
+  max-width: 360px;
+  height: 360px;
+
+  background: #FFFFFF;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+
+  padding: 16px
+}
+
+.highlight__title{
+  font-family: 'Manrope', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 150%;
+  color: #e183c8;
+}
+
+.highlight__rating{
+  font-family: 'Manrope', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 150%;
+  color: #A785ED;
+}
+
+.highlight__genre-launch{
+  font-family: 'Manrope', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 150%;
+
+  text-transform: uppercase;
+  color: rgba( 0, 0, 0, 0.7);
+
+  margin-bottom: 36px;
+}
+
+.highlight__description{
+  font-family: 'Manrope', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 150%;
 }
