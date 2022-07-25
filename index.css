@@ -75,6 +75,10 @@
   box-shadow: 0px, 4px, 8px, rgba(0, 0, 0, 0.15);
 }
 
+.btn-prev, .btn-next{
+  cursor: pointer;
+}
+
 .movie_info{
   margin-top: auto;
 
