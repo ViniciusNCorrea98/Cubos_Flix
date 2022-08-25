@@ -1,6 +1,23 @@
 const moviesList = document.querySelector('.movies');
 const btn_prev = document.querySelector('.btn-prev');
 const btn_next = document.querySelector('.btn-next');
+const input = document.querySelector('.input');
+
+input.addEventListener('keydown', function (event) {
+  if(event.key !== 'Enter'){
+    return; 
+  }
+
+  page = 0;
+
+  if(input.value){
+    load_search_movies(input.value)
+  } else {
+    load_movies()
+  }
+
+  input.value = '';
+})
 
 let page = 0;
 let movies = [];
@@ -54,6 +71,18 @@ function display (){
     movieContainer.append(movieInfo);
     moviesList.append(movieContainer);
   }
+}
+function load_search_movies (search){
+  const promiseResponse = fetch(`https://tmdb-proxy.cubos-academy.workers.dev/3/search/movie?language=pt-BR&include_adult=false&query=${search}`);
+
+  promiseResponse.then( function (response) {
+    const bodyResponse = response.json();
+
+    bodyResponse.then( function (body) {
+      movies = body.results;
+      display();
+    })
+  })
 }
 
 function load_movies (){
