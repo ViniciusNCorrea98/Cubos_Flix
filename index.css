@@ -137,11 +137,6 @@
 }
 
 .highlight__video{
-  background-image: linear-gradient( rgba(0, 0, 0, 0.6) 100%, rgba(0, 0, 0, 0.6) 100%), url('https://image.tmdb.org/t/p/original/jlGmlFOcfo8n5tURmhC7YVd4Iyy.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
- 
-
   width: 550px;
   height: 360px;
 
