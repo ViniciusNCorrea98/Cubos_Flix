@@ -2,6 +2,17 @@ const moviesList = document.querySelector('.movies');
 const btn_prev = document.querySelector('.btn-prev');
 const btn_next = document.querySelector('.btn-next');
 const input = document.querySelector('.input');
+const btn_theme = document.querySelector('.btn-theme');
+
+
+const modal = document.querySelector('.modal');
+const modal_close = document.querySelector('.modal__close');
+const body = document.querySelector('body');
+const modal__title = document.querySelector('.modal__title');
+const modal__img = document.querySelector('.modal__img');
+const modal__description = document.querySelector('.modal__description');
+const modal__genres = document.querySelector('.modal__genres');
+const modal__average = document.querySelector('.modal__average');
 
 
 const highlightVideo = document.querySelector('.highlight__video');
@@ -30,6 +41,58 @@ input.addEventListener('keydown', function (event) {
 
 let page = 0;
 let movies = [];
+const persitedTheme = localStorage.getItem('theme');
+
+let currentTheme = persitedTheme ? persitedTheme : 'light';
+
+
+function darkTheme() {
+  currentTheme = 'dark';
+    localStorage.setItem('theme', currentTheme);
+    btn_next.src = './assets/seta-direita-branca.svg';
+    btn_prev.src = './assets/seta-esquerda-branca.svg';
+    currentTheme = 'dark';
+    btn_theme.src = './assets/dark-mode.svg';
+    body.style.setProperty('--background-color', '#242424');
+    body.style.setProperty('--input-border-color', '#fff')
+    body.style.setProperty('--color', '#FFF');
+    body.style.setProperty('--shadow-color', "0px 4px 8px rgba(255, 255, 225, 0.15)");
+    body.style.setProperty('--highlight-background', "#454545");
+    body.style.setProperty('--letras-highlight', "#FFF");
+}
+
+function lightTheme() {
+  currentTheme = 'light';
+  localStorage.setItem('theme', currentTheme);
+  btn_theme.src = './assets/light-mode.svg';
+  btn_next.src = './assets/seta-direita-preta.svg';
+  btn_prev.src = './assets/seta-esquerda-preta.svg';
+  body.style.setProperty('--background-color', '#fff');
+  body.style.setProperty('--input-border-color', '#979797');
+  body.style.setProperty('--color', '#000');
+  body.style.setProperty('--highlight-background', "#FFF");
+  body.style.setProperty('--letras-highlight', "#000");
+}
+
+function changeThemes () {
+  if(currentTheme === 'light'){
+    darkTheme();
+  } else {
+    lightTheme();
+  }
+
+  localStorage.setItem('theme', currentTheme);
+}
+
+if(currentTheme === 'light'){
+  lightTheme();
+} else {
+  darkTheme();
+}
+
+btn_theme.addEventListener('click', function () {
+  changeThemes();  
+})
 
 btn_prev.addEventListener('click', function() {
   if(page === 0){
@@ -49,15 +112,28 @@ btn_next.addEventListener('click', function() {
   display()
 });
 
+modal.addEventListener('click', fecharModal)
+
+modal_close.addEventListener('click', fecharModal);
+
+
+function fecharModal() {
+  modal.classList.add('hidden');
+  body.style.overflow = 'auto';
+} 
+
 function display (){
   moviesList.textContent = '';
   for (let i = page * 5; i < (page * 5) + 5; i++) {
     const movie = movies[i];
-    console.log(movie);
       
     const movieContainer = document.createElement('div');
     movieContainer.classList.add('movie');
     movieContainer.style.backgroundImage = `url('${movie.poster_path}')`;
+ 
+    movieContainer.addEventListener("click", function () {
+      loadMovie(movie.id);
+    })
 
     const movieInfo = document.createElement('div');
     movieInfo.classList.add('movie_info');
@@ -103,7 +179,7 @@ function load_highlight_movies(){
     bodyResponse.then( function (body) {
       highlightVideo.style.background = `linear-gradient( rgba(0, 0, 0, 0.6) 100%, rgba(0, 0, 0, 0.6) 100%), url('${body.backdrop_path}') no-repeat center / cover`
 
-      highlightRating.textContent = body.vote_average;
+      highlightRating.textContent = body.vote_average.toFixed(2);
       highlightTitle.textContent = body.title;
       highlightDescription.textContent = body.overview;
 
@@ -135,6 +211,40 @@ function load_movies (){
     bodyResponse.then( function (body) {
       movies = body.results;
       display();
+    })
+  })
+}
+
+function loadMovie (id){
+  modal.classList.remove("hidden");
+
+  body.style.overflow = 'hidden';
+
+  const promiseResponse = fetch(`https://tmdb-proxy.cubos-academy.workers.dev/3/movie/${id}?language=pt-BR`);
+  
+
+  promiseResponse.then( function (response) {
+    const bodyResponse = response.json();
+
+    bodyResponse.then( function (body) {
+      modal__title.textContent = body.title;
+      modal__img.src = body.backdrop_path;
+      modal__img.alt = body.title;
+      modal__description.textContent = body.overview;
+      if(!body.overview){
+        modal__description.textContent = `O filme ${body.title} não possui uma descrição sobre.`
+      };
+      modal__average.textContent = body.vote_average.toFixed(2);
+      
+      modal__genres.textContent = '';
+      body.genres.forEach(function (genre) {
+        const modalGenre = document.createElement('span');
+        modalGenre.classList.add('modal__genre');
+        modalGenre.textContent = genre.name;
+
+        console.log(modal__genres);
+        modal__genres.append(modalGenre)
+      })
     })
   })
 }
